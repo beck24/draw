@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin_manifest xmlns="http://www.elgg.org/plugin_manifest/1.8">
+	<name>Draw</name>
+	<author>Matt Beckett</author>
+	<version>1.0</version>
+	<description>Draw pictures to save as a file or profile image</description>
+	<website>https://clever-name.com</website>
+	<copyright>(C) Matt Beckett, 2012</copyright>
+	<license>GNU Public License version 2</license>
+	
+	<requires>
+		<type>elgg_release</type>
+		<version>1.8</version>
+	</requires>
+	
+	<suggests>
+		<type>plugin</type>
+		<name>file</name>
+	</suggests>
+	
+</plugin_manifest>

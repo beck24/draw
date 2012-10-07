@@ -17,5 +17,20 @@
 		<type>plugin</type>
 		<name>file</name>
 	</suggests>
+  
+  <screenshot>
+    <path>graphics/draw.png</path>
+  </screenshot>
 	
+  <screenshot>
+    <path>graphics/draw2.png</path>
+  </screenshot>
+  
+  <screenshot>
+    <path>graphics/draw3.png</path>
+  </screenshot>
+  
+  <screenshot>
+    <path>graphics/draw4.png</path>
+  </screenshot>
 </plugin_manifest>

@@ -10,7 +10,10 @@ elgg_register_event_handler('pagesetup', 'system', 'draw_pagesetup');
 
 function draw_init() {
   elgg_extend_view('css/elgg', 'draw/css');
-  elgg_extend_view('forms/avatar/upload', 'draw/avataredit', 499);
+  
+  if (elgg_get_plugin_setting('avatar', 'draw') != 'no') {
+    elgg_extend_view('forms/avatar/upload', 'draw/avataredit', 499);
+  }
   
   // register css for drawing
   elgg_register_css('draw/slider', elgg_get_site_url() . 'mod/draw/js/range/jquery.ui.slider.css');
@@ -25,8 +28,13 @@ function draw_init() {
   elgg_register_js('draw/draw', elgg_get_site_url() . 'mod/draw/js/draw.js');
   
   // register our actions
-  elgg_register_action('draw/file', dirname(__FILE__) . '/actions/draw/file.php');
-  elgg_register_action('draw/avatar', dirname(__FILE__) . '/actions/draw/avatar.php');
+  if (elgg_get_plugin_setting('file', 'draw') != 'no') {
+    elgg_register_action('draw/file', dirname(__FILE__) . '/actions/draw/file.php');
+  }
+  
+  if (elgg_get_plugin_setting('avatar', 'draw') != 'no') {
+    elgg_register_action('draw/avatar', dirname(__FILE__) . '/actions/draw/avatar.php');
+  }
   
   elgg_register_page_handler('draw', 'draw_page_handler');
   
@@ -47,6 +55,10 @@ function draw_page_handler($page) {
   
   switch ($page[0]) {
     case 'file':
+      if (elgg_get_plugin_setting('file', 'draw') == 'no') {
+        return false;
+      }
+      
       elgg_set_page_owner_guid($page[1]);
       if (!elgg_is_active_plugin('file')) {
         return false;
@@ -57,6 +69,11 @@ function draw_page_handler($page) {
       break;
     
     case 'avatar':
+      
+      if (elgg_get_plugin_setting('avatar', 'draw') == 'no') {
+        return false;
+      }
+      
       $user = get_user_by_username($page[1]);
       if (!$user) {
         $user = elgg_get_logged_in_user_guid();
@@ -76,6 +93,10 @@ function draw_page_handler($page) {
  *  Set up our navigation
  */
 function draw_pagesetup() {
+  if (elgg_get_plugin_setting('file', 'draw') == 'no') {
+    return;
+  }
+  
   if (elgg_get_context() == 'file' && elgg_is_logged_in()) {
     $page_owner = elgg_get_page_owner_entity();
     $createlink = false;

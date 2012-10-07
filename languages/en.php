@@ -19,6 +19,8 @@ $english = array(
     'draw:invalid:permission' => "You don't have permission to do that.",
     'draw:save:avatar' => "Save as Avatar",
     'draw:or' => 'or',
+    'draw:settings:file' => "Allow drawing images to save as files?",
+    'draw:settings:avatar' => "Allow drawing user avatars?",
 );
 
 

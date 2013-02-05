@@ -3,10 +3,6 @@
 // include our procedural functions
 require_once 'lib/functions.php';
 
-// register for events
-elgg_register_event_handler('init', 'system', 'draw_init');
-elgg_register_event_handler('pagesetup', 'system', 'draw_pagesetup');
-
 
 function draw_init() {
   elgg_extend_view('css/elgg', 'draw/css');
@@ -39,6 +35,7 @@ function draw_init() {
   elgg_register_page_handler('draw', 'draw_page_handler');
   
   elgg_register_plugin_hook_handler('view', 'page/elements/owner_block', 'draw_sidebar');
+  elgg_register_plugin_hook_handler('register', 'menu:title', 'draw_title_menu');
   
   elgg_register_ajax_view('draw/convert');
 }
@@ -89,46 +86,11 @@ function draw_page_handler($page) {
 }
 
 
-/**
- *  Set up our navigation
- */
-function draw_pagesetup() {
-  if (elgg_get_plugin_setting('file', 'draw') == 'no') {
-    return;
-  }
-  
-  if (elgg_get_context() == 'file' && elgg_is_logged_in()) {
-    $page_owner = elgg_get_page_owner_entity();
-    $createlink = false;
-    
-    if (!$page_owner) {
-      $page_owner = elgg_get_logged_in_user_entity();
-    }
-    
-    if ($page_owner->canEdit()) {
-      $createlink = true;
-    }
-    
-    if (!$createlink && elgg_instanceof($page_owner, 'group') && $page_owner->isMember()) {
-      $createlink = true;
-    }
-    
-    if ($createlink) {
-      elgg_register_menu_item('title', array(
-        'name' => 'draw',
-        'href' => 'draw/file/' . $page_owner->guid,
-        'text' => elgg_echo('draw:picture'),
-        'class' => 'elgg-button elgg-button-action',
-        'contexts' => array('file'),
-        'priority' => 1000
-      ));
-    }
-  }
-}
-
-
 function draw_sidebar($hook, $type, $return, $params) {
   if (elgg_get_context() == 'draw') {
     return '';
   }
 }
+
+// register for events
+elgg_register_event_handler('init', 'system', 'draw_init');

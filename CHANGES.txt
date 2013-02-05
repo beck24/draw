@@ -1,0 +1,6 @@
+== Version History ==
+
+x.x (mm/dd/yyyy):
+
+1.1 (02/05/2013):
+ - Updated 'draw picture' title link to show only when file upload link is active

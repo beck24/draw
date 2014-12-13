@@ -1,4 +1,7 @@
 <?php
+
+namespace Draw;
+
 gatekeeper();
 
 $page_owner = elgg_get_page_owner_entity();
@@ -7,8 +10,6 @@ if (!$page_owner->canEdit()) {
   register_error(elgg_echo('draw:invalid:permissions'));
   forward(REFERRER);
 }
-
-elgg_unextend_view('page/layouts/content/sidebar', 'page/elements/owner_block');
 
 $title = elgg_echo('draw:avatar');
 

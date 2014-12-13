@@ -3,11 +3,14 @@
  * Avatar upload action
  */
 
+namespace Draw;
+use ElggFile;
+
 $guid = get_input('guid');
 $owner = get_entity($guid);
 $data = get_input('draw-image-result', false, false);
 
-if (!$owner || !($owner instanceof ElggUser) || !$owner->canEdit()) {
+if (!$owner || !elgg_instanceof($owner, 'user') || !$owner->canEdit()) {
 	register_error(elgg_echo('avatar:upload:fail'));
 	forward(REFERER);
 }

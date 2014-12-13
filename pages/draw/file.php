@@ -1,4 +1,7 @@
 <?php
+
+namespace Draw;
+
 gatekeeper();
 
 $page_owner = elgg_get_page_owner_entity();

@@ -1,14 +1,17 @@
 <?php
 
-draw_register_dependencies();
+namespace Draw;
+
+elgg_load_css('wColorPicker');
+elgg_load_css('jquery.wPaint');
+elgg_require_js('draw/main');
 
 echo <<<HTML
-&nbsp;
-<div id="canvaswrapper">
-	<div id="canvas"></div>
+<div style="position:relative; height: 60px;">Hello</div>
+<div id="wPaint" style="position:relative; margin: 0 auto; width: 80%px; height: 400px">
+
 </div>
 
-<canvas id='realcanvas' width='500px' height='500px' style='border: 1px solid black;'></canvas>
 HTML;
 
 echo elgg_view('input/hidden', array('id' => 'draw-image-result', 'name' => 'draw-image-result', 'value' => ''));

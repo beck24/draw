@@ -1,43 +1,38 @@
 <?php
 
-// include our procedural functions
-require_once 'lib/functions.php';
+namespace Draw;
 
+const PLUGIN_ID = 'draw';
+const UPGRADE_VERSION = 20141210;
 
-function draw_init() {
-  elgg_extend_view('css/elgg', 'draw/css');
+require_once __DIR__ . '/lib/hooks.php';
+require_once __DIR__ . '/lib/functions.php';
+
+elgg_register_event_handler('init', 'system', __NAMESPACE__ . '\\init');
+
+function init() {
   
   if (elgg_get_plugin_setting('avatar', 'draw') != 'no') {
     elgg_extend_view('forms/avatar/upload', 'draw/avataredit', 499);
   }
   
-  // register css for drawing
-  elgg_register_css('draw/slider', elgg_get_site_url() . 'mod/draw/js/range/jquery.ui.slider.css');
-  
-  // register js for drawing
-  elgg_register_js('draw/slider', elgg_get_site_url() . 'mod/draw/js/range/slider.js');
-  elgg_register_js('draw/raphael', elgg_get_site_url() . 'mod/draw/js/raphael/raphael-min.js');
-  elgg_register_js('draw/rgbcolor', elgg_get_site_url() . 'mod/draw/js/raphael/rgbcolor.js');
-  elgg_register_js('draw/canvg', elgg_get_site_url() . 'mod/draw/js/raphael/canvg.js');
-  elgg_register_js('draw/raphael-svg', elgg_get_site_url() . 'mod/draw/js/raphael/raphael-to-svg.js');
-  elgg_register_js('draw/colorpicker', elgg_get_site_url() . 'mod/draw/js/raphael/colorwheel.js');
-  elgg_register_js('draw/draw', elgg_get_site_url() . 'mod/draw/js/draw.js');
   
   // register our actions
   if (elgg_get_plugin_setting('file', 'draw') != 'no') {
-    elgg_register_action('draw/file', dirname(__FILE__) . '/actions/draw/file.php');
+    elgg_register_action('draw/file', __DIR__ . '/actions/draw/file.php');
   }
   
   if (elgg_get_plugin_setting('avatar', 'draw') != 'no') {
-    elgg_register_action('draw/avatar', dirname(__FILE__) . '/actions/draw/avatar.php');
+    elgg_register_action('draw/avatar', __DIR__ . '/actions/draw/avatar.php');
   }
   
-  elgg_register_page_handler('draw', 'draw_page_handler');
+  elgg_register_page_handler('draw', __NAMESPACE__ . '\\page_handler');
   
-  elgg_register_plugin_hook_handler('view', 'page/elements/owner_block', 'draw_sidebar');
-  elgg_register_plugin_hook_handler('register', 'menu:title', 'draw_title_menu');
+  elgg_register_plugin_hook_handler('register', 'menu:title', __NAMESPACE__ . '\\title_menu');
   
   elgg_register_ajax_view('draw/convert');
+  
+  register_js();
 }
 
 
@@ -47,7 +42,7 @@ function draw_init() {
  * 
  * @param array $page
  */
-function draw_page_handler($page) {
+function page_handler($page) {
   gatekeeper();
   
   switch ($page[0]) {
@@ -85,12 +80,3 @@ function draw_page_handler($page) {
   return false;
 }
 
-
-function draw_sidebar($hook, $type, $return, $params) {
-  if (elgg_get_context() == 'draw') {
-    return '';
-  }
-}
-
-// register for events
-elgg_register_event_handler('init', 'system', 'draw_init');

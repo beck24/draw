@@ -1,5 +1,6 @@
 <?php
 
+namespace Draw;
 
 function draw_group_gatekeeper($group, $forward = true, $url = '') {
   if (!elgg_instanceof($group, 'group')) {
@@ -19,21 +20,6 @@ function draw_group_gatekeeper($group, $forward = true, $url = '') {
   return true;
 }
 
-/**
- * convenience function for registering js/css
- */
-function draw_register_dependencies() {
-  elgg_load_css('draw/slider');
-  
-  // load js for drawing
-  elgg_load_js('draw/raphael');
-  elgg_load_js('draw/rgbcolor');
-  elgg_load_js('draw/canvg');
-  elgg_load_js('draw/raphael-svg');
-  elgg_load_js('draw/colorpicker');
-  elgg_load_js('draw/draw');
-}
-
 
 function draw_imagepngtojpg($trans) {
 	// Create a new true color image with the same size
@@ -51,25 +37,37 @@ function draw_imagepngtojpg($trans) {
 }
 
 
-function draw_title_menu($hook, $type, $return, $params) {
-  // inspect the menu items only if we're in files
-  if (elgg_get_context() == 'file' && elgg_is_logged_in() && is_array($return)) {
-	$createlink = false;
-	foreach ($return as $key => $item) {
-	  if ($item->getName() == 'add') {
-		$createlink = true;
-	  }
-	}
+function register_js() {
 	
-	$owner = elgg_get_page_owner_entity();
+	elgg_register_css('wColorPicker', '/mod/' . PLUGIN_ID . '/vendors/wPaint/lib/wColorPicker.min.css');
+	elgg_define_js('wColorPicker', array(
+		'src' => '/mod/' . PLUGIN_ID . '/vendors/wPaint/lib/wColorPicker.min.js',
+		'deps' => array('jquery')
+	));
 	
-	if ($createlink && elgg_instanceof($owner)) {
-	  $draw = new ElggMenuItem('draw', elgg_echo('draw:picture'), 'draw/file/' . $owner->guid);
-	  $draw->setLinkClass('elgg-button elgg-button-action');
-	  
-	  $return[] = $draw;
-	}
-  }
-  
-  return $return;
+	elgg_register_css('jquery.wPaint', '/mod/' . PLUGIN_ID . '/vendors/wPaint/wPaint.min.css');
+	elgg_define_js('jquery.wPaint', array(
+		'src' => '/mod/' . PLUGIN_ID . '/vendors/wPaint/wPaint.min.js',
+		'deps' => array('jquery', 'wColorPicker')
+	));
+	
+	elgg_define_js('wPaint.menu', array(
+		'src' => '/mod/' . PLUGIN_ID . '/vendors/wPaint/plugins/main/wPaint.menu.main.min.js',
+		'deps' => array('jquery.wPaint')
+	));
+	
+	elgg_define_js('wPaint.shapes', array(
+		'src' => '/mod/' . PLUGIN_ID . '/vendors/wPaint/plugins/shapes/wPaint.menu.main.shapes.min.js',
+		'deps' => array('jquery.wPaint')
+	));
+	
+	elgg_define_js('wPaint.file', array(
+		'src' => '/mod/' . PLUGIN_ID . '/vendors/wPaint/plugins/file/wPaint.menu.main.file.min.js',
+		'deps' => array('jquery.wPaint')
+	));
+	
+	elgg_define_js('wPaint.text', array(
+		'src' => '/mod/' . PLUGIN_ID . '/vendors/wPaint/plugins/text/wPaint.menu.text.min.js',
+		'deps' => array('wPaint.menu', 'wPaint.shapes')
+	));
 }

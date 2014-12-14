@@ -25,7 +25,7 @@ library.  https://github.com/websanova/wPaint
 
 ## Screenshots
 
-![alt text](https://raw.githubusercontent.com/beck24/draw/master/graphics/draw.png "Create an avatar")
+![alt text](https://raw.githubusercontent.com/beck24/draw/master/graphics/draw1.png "Create an avatar")
 ![alt text](https://raw.githubusercontent.com/beck24/draw/master/graphics/draw2.png "Draw a new image to save as a file")
 ![alt text](https://raw.githubusercontent.com/beck24/draw/master/graphics/draw3.png "Draw over an existing image")
 ![alt text](https://raw.githubusercontent.com/beck24/draw/master/graphics/draw4.png "Plugin settings")

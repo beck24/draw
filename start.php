@@ -1,7 +1,5 @@
 <?php
 
-//@TODO - patch wPaint - https://github.com/websanova/wPaint/pull/87/files
-
 namespace Draw;
 
 const PLUGIN_ID = 'draw';

@@ -7,16 +7,14 @@ elgg_load_css('jquery.wPaint');
 elgg_require_js('draw/main');
 
 echo <<<HTML
-<div style="position:relative; height: 60px;">Hello</div>
-<div id="wPaint" style="position:relative; margin: 0 auto; width: 80%px; height: 400px">
+<div id="wPaint" style="position:relative; margin: 0 auto; width: 600px; height: 400px; border: 1px solid black;">
 
 </div>
 
 HTML;
 
-echo elgg_view('input/hidden', array('id' => 'draw-image-result', 'name' => 'draw-image-result', 'value' => ''));
+echo '<div class="center mtm">';
 echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
-
-echo '<div class="center">';
+echo elgg_view('input/hidden', array('id' => 'draw-image-result', 'value' => '', 'name' => 'draw-image-result'));
 echo elgg_view('input/submit', array('value' => elgg_echo('draw:save:avatar')));
 echo '</div>';

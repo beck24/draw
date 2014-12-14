@@ -5,17 +5,11 @@ define(function(require) {
     require('wPaint.text');
 
     var init = function() {
-
-        $('#wPaint').wPaint({
-            path: elgg.get_site_url() + 'mod/draw/vendors/wPaint/',
-            bg: '#cccccc'
+        $(document).on('change', 'input[name="upload"]', function(e) {
+            // they've selected a file, remove any drawings
+            $('.draw-target').html('');
+            $('#draw-image-result').val('');
         });
-        
-        $('form').submit(function() {
-            $('#draw-image-result').val($("#wPaint").wPaint("image"));
-           return true;
-        });
-
     };
 
     elgg.register_hook_handler('init', 'system', init);

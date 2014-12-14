@@ -1,18 +1,35 @@
 <?php
 
-draw_register_dependencies();
+namespace Draw;
+
+elgg_load_css('wColorPicker');
+elgg_load_css('jquery.wPaint');
+elgg_require_js('wPaint.text');
 
 echo <<<HTML
-&nbsp;
-<div id="canvaswrapper">
-	<div id="canvas"></div>
+<div id="wPaint" style="position:relative; margin: 0 auto; width: 600px; height: 400px; border: 1px solid black;">
+
 </div>
 
-<canvas id='realcanvas' width='500px' height='500px' style='border: 1px solid black;'></canvas>
 HTML;
 
+$existing = '';
+$file = get_entity($vars['guid']);
+if (elgg_instanceof($file, 'object', 'file') && $file->simpletype == 'image') {
+	$path = $file->getFilenameOnFilestore();
+	$contents = file_get_contents($path);
+	$type = pathinfo($path, PATHINFO_EXTENSION);
+	$existing =  "data:image/{$type};base64," . base64_encode($contents);
+}
+
 echo elgg_view('input/hidden', array('id' => 'draw-image-result', 'name' => 'draw-image-result', 'value' => ''));
+//echo elgg_view('input/hidden', array('name' => 'guid', 'value' => $vars['guid']));
+echo elgg_view('input/hidden', array('name' => 'draw-existing', 'value' => $existing));
 
-echo elgg_view('input/hidden', array('name' => 'container_guid', 'value' => elgg_get_page_owner_guid()));
-
-echo elgg_view('forms/file/upload');
+echo '<div class="center mtm">';
+echo elgg_view('output/url', array(
+	'text' => elgg_echo('draw:done'),
+	'href' => '#',
+	'class' => 'elgg-button elgg-button-submit draw-image-select'
+));
+echo '</div>';

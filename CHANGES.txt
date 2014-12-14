@@ -2,5 +2,11 @@
 
 x.x (mm/dd/yyyy):
 
+2.0 ():
+ - updated for 1.9
+ - draw UI now happens in relevant forms via lightbox
+ - changed paint library to wPaint
+ - enable drawing on existing pictures (tested jpg/png/gif)
+
 1.1 (02/05/2013):
  - Updated 'draw picture' title link to show only when file upload link is active

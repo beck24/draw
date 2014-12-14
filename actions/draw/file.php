@@ -5,6 +5,8 @@
  * @package ElggFile
  */
 
+namespace Draw;
+
 // Get variables
 $title = get_input("title", false);
 $desc = get_input("description");

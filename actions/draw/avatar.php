@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Avatar upload action
  */
@@ -16,20 +17,23 @@ if (!$owner || !elgg_instanceof($owner, 'user') || !$owner->canEdit()) {
 }
 
 if (!$data) {
-  register_error(elgg_echo('draw:invalid:image'));
-  forward(REFERER);
+	register_error(elgg_echo('draw:invalid:image'));
+	forward(REFERER);
 }
 
-preg_match('#^data:[\w/]+(;[\w=]+)*,[\w+/=%]+$#', $data);
+if (!preg_match('#^data:[\w/]+(;[\w=]+)*,[\w+/=%]+$#', $data)) {
+	register_error(elgg_echo('draw:invalid:image'));
+	forward(REFERER);
+}
 
-    // use ElggFile to create the directory if it doesn't exist
-    $file = new ElggFile();
-		$file->owner_guid = $guid;
-		$file->setFilename("profile/{$guid}tmp.jpg");
-		$file->open('write');
-		$file->close();
-    $tmp = $file->getFilenameOnFilestore();
-    
+// use ElggFile to create the directory if it doesn't exist
+$file = new ElggFile();
+$file->owner_guid = $guid;
+$file->setFilename("profile/{$guid}tmp.jpg");
+$file->open('write');
+$file->close();
+$tmp = $file->getFilenameOnFilestore();
+
 // turn png into jpg
 // Open original PNG image
 $png = imagecreatefrompng($data);

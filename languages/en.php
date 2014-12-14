@@ -21,6 +21,7 @@ $english = array(
     'draw:or' => 'or',
     'draw:settings:file' => "Allow drawing images to save as files?",
     'draw:settings:avatar' => "Allow drawing user avatars?",
+	'draw:done' => "Done Drawing",
 );
 
 

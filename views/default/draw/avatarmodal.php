@@ -8,7 +8,7 @@ echo elgg_view_form('draw/avatar', array(), $vars);
 <script>
 	$(document).ready(function() {
 		$('#wPaint').wPaint({
-            path: '/mod/draw/vendors/wPaint/',
+            path: elgg.get_site_url() + '/mod/draw/vendors/wPaint/',
             bg: '#ffffff'
         });
         

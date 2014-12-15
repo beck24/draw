@@ -13,7 +13,7 @@ echo elgg_view('forms/draw/file', $vars);
 		}
 		
 		$('#wPaint').wPaint({
-			path: '/mod/draw/vendors/wPaint/',
+			path: elgg.get_site_url() + '/mod/draw/vendors/wPaint/',
 			image: val,
             bg: '#ffffff'
         });

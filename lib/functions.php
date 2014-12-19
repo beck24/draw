@@ -176,12 +176,15 @@ function update_file($file, $img) {
 
 // if image, we need to create thumbnails (this should be moved into a function)
 	if ($guid && $file->simpletype == "image") {
+		$prefix = "file/";
+		$filestorename = elgg_strtolower(time() . 'draw.jpg');
+		
 		$file->icontime = time();
 
 		$thumbnail = get_resized_image_from_existing_file($file->getFilenameOnFilestore(), 60, 60, true);
 		if ($thumbnail) {
 			$thumb = new ElggFile();
-			$thumb->owner_guid = $options['owner_guid'];
+			$thumb->owner_guid = $file->owner_guid;
 			//$thumb->setMimeType('image/png');
 			$thumb->setMimeType('image/jpeg');
 

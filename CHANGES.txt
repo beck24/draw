@@ -2,6 +2,9 @@
 
 x.x (mm/dd/yyyy):
 
+2.0.2 (12/18/2014):
+ - fixed issue with repetitive file edit
+
 2.0.1 (12/14/2014):
  - changed icon js path setting to absolute value for installations outside of root
 

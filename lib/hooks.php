@@ -39,7 +39,7 @@ function file_upload($h, $t, $r, $p) {
 	// we just replace the file
 	// standard action will ignore it
 	$entity = get_entity($guid);
-	if (elgg_instanceof($entity, 'object', 'file')) {
+	if (elgg_instanceof($entity, 'object', 'file') && $entity->canEdit()) {
 		update_file($entity, $img);
 	}
 	
